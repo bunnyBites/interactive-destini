@@ -51,53 +51,39 @@ class _StoryPageState extends State<StoryPage> {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: TextButton(
-                  onPressed: () {
-                    //Choice 1 made by user.
-                    setState(() {
-                      storyBrain.nextStory(1);
-                    });
-                  },
-                  style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.red)),
-                  child: Text(
-                    storyBrain.getChoice1(),
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+              actionButton(1),
               const SizedBox(
                 height: 20.0,
               ),
-              Expanded(
-                flex: 2,
-                child: (storyBrain.getChoice2() != '')
-                    ? TextButton(
-                        onPressed: () {
-                          //Choice 2 made by user.
-                          setState(() {
-                            storyBrain.nextStory(2);
-                          });
-                        },
-                        style: const ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.blue)),
-                        child: Text(
-                          storyBrain.getChoice2(),
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    : Container(),
-              ),
+              ((storyBrain.getChoice2() != '') ? actionButton(2) : Container()),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Expanded actionButton(int choicePreference) {
+    return Expanded(
+      flex: 2,
+      child: TextButton(
+        onPressed: () {
+          //Choice 1 made by user.
+          setState(() {
+            storyBrain.nextStory(choicePreference);
+          });
+        },
+        style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(
+          ((choicePreference == 1) ? Colors.red : Colors.blue),
+        )),
+        child: Text(
+          ((choicePreference == 1)
+              ? storyBrain.getChoice1()
+              : storyBrain.getChoice2()),
+          style: const TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
           ),
         ),
       ),
